@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 
 function ApproveLetter({ state }) {
   const [id, setId] = useState("");
 
-  const allowedAccount = "0x9065d0ED36Bd17CbB56467A9e87b0CEC44f82b86"; // Replace with the desired allowed account
+  const allowedAccount = "0x95512b9CDDd4c4222B17BDfD1d0df6616dbD1F19"; // Replace with the desired allowed account
 
   const handleApprove = async () => {
     try {
@@ -11,6 +11,13 @@ function ApproveLetter({ state }) {
       console.log(account);
       if (account !== allowedAccount) {
         alert("You are not allowed to approve recommendations.");
+        return;
+      }
+
+      // Check if the requested recommendation exists before approving
+      const studentDetails = await state.contract.getStudentDetails(id);
+      if (studentDetails[0] === "") {
+        alert("No recommendation found for this ID.");
         return;
       }
 
@@ -35,7 +42,7 @@ function ApproveLetter({ state }) {
         onClick={handleApprove}
         className="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
       >
-        Approve Recommendation
+        Approve Request
       </button>
     </div>
   );

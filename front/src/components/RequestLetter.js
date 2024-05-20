@@ -1,24 +1,44 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 function RequestLetter({ state }) {
   const [name, setName] = useState("");
   const [university, setUniversity] = useState("");
   const [program, setProgram] = useState("");
-  const [id, setId] = useState(9); // Initialize ID to 7
-  const { contract } = state;
+  const [id, setId] = useState(null);
 
   useEffect(() => {
-    // This effect will run only once, on component mount
-    setId(9); // Initialize ID to 7
-  }, []);
+    const fetchLastRecommendationId = async () => {
+      try {
+        // Fetch the last recommendation ID from the contract
+        const lastId = await state.contract.studentCount();
+        setId(Number(lastId)); // Set the last ID as the current ID
+      } catch (error) {
+        console.error(error);
+        alert("Error fetching last recommendation ID");
+      }
+    };
+
+    fetchLastRecommendationId();
+  }, [state.contract]);
 
   const handleRequest = async () => {
+    // Validation check
+    if (!name || !university || !program) {
+      alert("All fields are required");
+      return;
+    }
+
     try {
       // Request recommendation from the contract
-      await contract.requestRecommendation(name, university, program);
+      await state.contract.requestRecommendation(name, university, program);
 
-      // Increment the ID after a successful request
+      // Update the ID locally to reflect the latest recommendation
       setId((prevId) => prevId + 1);
+
+      // Clear the input fields
+      setName("");
+      setUniversity("");
+      setProgram("");
 
       alert("Recommendation requested successfully!");
     } catch (error) {
@@ -55,9 +75,9 @@ function RequestLetter({ state }) {
         onClick={handleRequest}
         className="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
       >
-        Request Recommendation
+        Request Certificate
       </button>
-      {id !== "" && (
+      {id !== null && (
         <div className="mt-2 text-gray-300">Recommendation ID: {id}</div>
       )}
     </div>

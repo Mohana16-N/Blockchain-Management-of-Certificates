@@ -1,0 +1,94 @@
+.certificate {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 10px double #8b0000;
+    background: #fffaf0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Georgia', serif;
+    position: relative;
+  }
+  
+  .certificate:before, .certificate:after {
+    content: '';
+    position: absolute;
+    border: 5px solid #8b0000;
+  }
+  
+  .certificate:before {
+    top: -15px;
+    bottom: -15px;
+    left: -15px;
+    right: -15px;
+  }
+  
+  .certificate:after {
+    top: -25px;
+    bottom: -25px;
+    left: -25px;
+    right: -25px;
+  }
+  
+  .certificate-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #4b0082;
+  }
+  
+  .certificate-text {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .certificate-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #00008b;
+  }
+  
+  .certificate-program,
+  .certificate-university {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #00008b;
+  }
+  
+  strong {
+    color: #008000;
+  }
+  
+  .certificate-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .certificate-id {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .certificate-signature {
+    text-align: center;
+  }
+  
+  .signature-image {
+    width: 150px;
+    height: auto;
+  }
+  
+  .signature-text {
+    margin-top: 5px;
+    font-size: 16px;
+    color: #555;
+  }
+  

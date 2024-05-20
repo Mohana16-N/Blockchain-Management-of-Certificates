@@ -1,9 +1,11 @@
-import abi from "./contract/June.json";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import abi from "./contract/June.json";
 import RequestLetter from "./components/RequestLetter";
 import ApproveLetter from "./components/ApproveLetter";
 import GetDetails from "./components/GetDetails";
+import './App.css';  // Import the CSS file
 
 function App() {
   const [state, setState] = useState({
@@ -14,13 +16,13 @@ function App() {
 
   useEffect(() => {
     const connectWallet = async () => {
-      const contractAddress = "0x9094B78f7280f48051efe60D24Eae4C01d730ba1";
+      const contractAddress = "0xEFEb0dd4F1F37135Ea838faf34d9cF6704be7945";
       const contractABI = abi.abi;
       try {
         const { ethereum } = window;
 
         if (ethereum) {
-          const account = await ethereum.request({
+          await ethereum.request({
             method: "eth_requestAccounts",
           });
 
@@ -44,41 +46,81 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-pink-50 min-h-screen text-gray-900 font-serif">
-      <div className="container mx-auto p-8">
-        <h1 className="text-3xl font-bold mb-8 text-center text-pink-600">
-          Letter Of Reccomendation
-        </h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-lg overflow-hidden shadow-md">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold mb-4 text-pink-600">
-                Request LOR
-              </h2>
-              <RequestLetter state={state} />
-            </div>
+    <Router>
+      <div>
+        <header className="App-header">
+          <div className="container">
+            <h1 className="App-title">Management of Education Certificates</h1>
+            <nav>
+              <ul className="nav-links">
+                <li>
+                  <Link to="/" className="nav-link">Home</Link>
+                </li>
+                <li>
+                  <Link to="/request" className="nav-link">Request Certificate</Link>
+                </li>
+                <li>
+                  <Link to="/approve" className="nav-link">Approve Certificate</Link>
+                </li>
+                <li>
+                  <Link to="/details" className="nav-link">Get Certificate </Link>
+                </li>
+              </ul>
+            </nav>
           </div>
-          <div className="bg-white rounded-lg overflow-hidden shadow-md">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold mb-4 text-pink-600">
-                Approve LOR
-              </h2>
-              <ApproveLetter state={state} />
-            </div>
-          </div>
-        </div>
-        <br></br>
-        <br></br>
-        <div className="bg-white rounded-lg overflow-hidden shadow-md">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold mb-4 text-pink-600">
-              Get Details
-            </h2>
-            <GetDetails state={state} />
-          </div>
+        </header>
+        <div className="container">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="card">
+                    <div className="card-content">
+                      <h2 className="card-title">Welcome!</h2>
+                      <p className="card-description">Empower our institution's future with secure and accessible certificate management.</p>
+                    </div>
+                  </div>
+                </div>
+              }
+            />
+            <Route
+              path="/request"
+              element={
+                <div className="card">
+                  <div className="card-content">
+                    <h2 className="card-title">Request Certificate</h2>
+                    <RequestLetter state={state} />
+                  </div>
+                </div>
+              }
+            />
+            <Route
+              path="/approve"
+              element={
+                <div className="card">
+                  <div className="card-content">
+                    <h2 className="card-title">Approve Certificate</h2>
+                    <ApproveLetter state={state} />
+                  </div>
+                </div>
+              }
+            />
+            <Route
+              path="/details"
+              element={
+                <div className="card">
+                  <div className="card-content">
+                    <h2 className="card-title">Get Certificate</h2>
+                    <GetDetails state={state} />
+                  </div>
+                </div>
+              }
+            />
+          </Routes>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
